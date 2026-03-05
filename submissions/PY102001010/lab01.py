@@ -82,39 +82,21 @@ def doubleIt(head):
 
     Requirements:
     - Use linked-list operations/pointer logic.
-    - Avoid converting the entire list into an integer/string for the core solution.
-    """
+    - Avoid converting the entire list into an integer/string for the core solution.    """
 
-        class ListNode(object):
-        def __init__(self, val=0, next=None):
-            self.val = val
-            self.next = next
-
-            def reverse(node):
-                prev = None
-                curr = node
-                while curr:
-                    temp = curr.next
-                    curr.next = prev
-                    prev = curr
-                    curr = temp
-                return prev
+        if head.val >= 5:
+            head = ListNode(0, head)
+            
+        curr = head
+        while curr:
+            # Double the current value and keep only the single digit
+            curr.val = (curr.val * 2) % 10
+            
+            # If the next node exists and is >= 5, it will produce a carry
+            if curr.next and curr.next.val >= 5:
+                curr.val += 1
                 
-            curr = reverse(head)
-            new_head = curr
-            carry = 0
-            while curr:
-                val = curr.val * 2 + carry
-                curr.val = val % 10
-                carry = val // 10
-
-                if not curr.next and carry:
-                    curr.next = ListNode(carry)
-                    break
-                curr = curr.next
-
-            return reverse(new_head)
-            break
-        curr = curr.next
-    return reverse(new_head)
+            curr = curr.next
+            
+        return head
 
